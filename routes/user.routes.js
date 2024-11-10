@@ -46,50 +46,52 @@ router.get('/login', (req, res) => {
 
 router.post('/login',
 
-    body('username').trim().isEmail().isLength({ min: 3 }),
-    body('password').trim().isLength({ min: 4 })
-    ,
+    body('username').trim().isEmail().isLength({ min: 5 }),
+    body('password').trim().isLength({ min: 4 }),
+
     async (req, res) => {
         const errors = validationResult(req);
-        if (!errors.isEmpty()) {
+        console.log(errors)
+        if (errors.isEmpty()) {
             return res.status(400).json({
                 errors: errors.array(),
-                message: 'invalid data'
+                message: 'Invalid data'
             });
         }
+        console.log(errors)
 
         const { username, password } = req.body;
         const user = await userModels.findOne({ username: username });
         if (!user) {
             return res.status(400).json({
-                message: 'user not found or username and password is incorrect'
+                message: 'User not found or username and password are incorrect'
             });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({
-                message: 'username or password is incorrect'
+                message: 'Username or password is incorrect'
             });
         }
-        res.json({
-            message: 'logged in',
 
-        });
         const token = jwt.sign(
             {
                 userId: user._id,
-                email: user.email,
+                // email: user.email,
                 username: user.username
             },
             process.env.JWT_SECRET
         );
         res.json({
-            token:token
-
+            message: 'Logged in',
+            token: token
+            
         });
-
+        
+        console.log()
     }
 );
+
 
 module.exports = router;
