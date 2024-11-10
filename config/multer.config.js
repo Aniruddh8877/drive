@@ -6,7 +6,7 @@ const serviceAccount=require('../drive-aniruddh-firebase-adminsdk-5k78j-dede77e9
 
 const storage=firebaseStorage({
    credentials: firebase.credential.cert(serviceAccount),
-    bucketName: 'drive-aniruddh-dede77e97a.appspot.com',
+    bucketName: 'drive-aniruddh.appspot.com',
     
 })
 
