@@ -5,7 +5,7 @@ const serviceAccount = require('../drive-aniruddh-firebase-adminsdk-5k78j-dede77
 
 const firebase = Firebase.initializeApp({
     credential: Firebase.credential.cert(serviceAccount),
-    storageBucket: 'drive-aniruddh-dede77e97a.appspot.com'
+    storageBucket: 'drive-aniruddh.appspot.com'
     
 })
 
