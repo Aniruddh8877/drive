@@ -5,15 +5,20 @@ dotenv.config()
 const connect=require('./config/db')
 const connectToDB = require('./config/db')
 connectToDB()
+const cookieParser = require('cookie-parser')
 const app = express()
+const  indexRouter=require('./routes/index.routes')
 
 // const path = require('path');
 // app.set('views', path.join(__dirname, 'views'));
 
 app.set('view engine','ejs')//accesing view engine to render ejs file path
+app.use(cookieParser())
 app.use(express.json()) // middleware to print json code into javascript object form (req.body)
 app.use(express.urlencoded({extended: true})) // middle ware to convert url into json code
 
+
+app.use('/',indexRouter)
 app.use('/user',userRouter) // all routes defined in userRoutes. acces only under  /user routes
         
 

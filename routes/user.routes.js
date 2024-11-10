@@ -51,14 +51,14 @@ router.post('/login',
 
     async (req, res) => {
         const errors = validationResult(req);
-        console.log(errors)
+       
         if (errors.isEmpty()) {
             return res.status(400).json({
                 errors: errors.array(),
                 message: 'Invalid data'
             });
         }
-        console.log(errors)
+      
 
         const { username, password } = req.body;
         const user = await userModels.findOne({ username: username });
@@ -78,18 +78,14 @@ router.post('/login',
         const token = jwt.sign(
             {
                 userId: user._id,
-                // email: user.email,
+                email: user.email,
                 username: user.username
             },
             process.env.JWT_SECRET
         );
-        res.json({
-            message: 'Logged in',
-            token: token
-            
-        });
-        
-        console.log()
+        res.cookie('token',token)
+        res.send('logged in')
+       
     }
 );
 
